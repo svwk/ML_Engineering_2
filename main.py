@@ -1,37 +1,17 @@
-import streamlit as st
 from transformers import pipeline
-
+import streamlit as st
+import Router as rt
 
 @st.cache(allow_output_mutation=True)
 def load_model():
     return pipeline("text-generation", "gpt2")
 
-
-def load_text():
-    generation_text = st.text_input(label='Введите текст для генерации')
-    if generation_text:
-        return generation_text
-    else:
-        return ''
-
-def load_len():
-    generation_len_txt = st.text_input(label='Введите длину сгенерированного текста')
-    if generation_len_txt:
-        try:
-            generation_len = int(generation_len_txt)
-        except:
-            generation_len = 0
-        return generation_len
-    else:
-        return 0
-
-
 model = load_model()
 
 st.title('Генерация текста')
 st.markdown('<span style="color: red; font-weight: bold">NB!</span> Поддерживается только английский язык', unsafe_allow_html=True)
-txt = load_text()
-txt_len = load_len()
+txt = rt.load_text()
+txt_len = rt.load_len()
 result = st.button('Сгенерировать текст')
 if result:
     if len(txt) > 0 and txt_len > 0:
