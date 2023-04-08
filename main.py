@@ -1,17 +1,17 @@
 import streamlit as st
-import Router as rt
+import text_utils as tut
 from generator import Generator
 
 
 st.title('Генерация текста')
 st.markdown('<span style="color: red; font-weight: bold">NB!</span> Поддерживается только английский язык', unsafe_allow_html=True)
-txt = rt.load_text()
-txt_len = rt.load_len()
-result = st.button('Сгенерировать текст')
-if result:
-    if len(txt) > 0 and txt_len > 0:
+source_text = tut.get_text_from_input()
+text_length = tut.get_length_from_input()
+result_text = st.button('Сгенерировать текст')
+if result_text:
+    if len(source_text) > 0 and text_length > 0:
         with st.spinner('Дождитесь генерации...'):
-            generated_text = Generator().generate_text(txt, txt_len)
+            generated_text = Generator().generate_text(source_text, text_length)
             st.write('**Результаты генерации:**')
             st.write(generated_text)
     else:
